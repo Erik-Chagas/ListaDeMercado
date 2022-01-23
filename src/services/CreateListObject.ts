@@ -2,6 +2,7 @@ import { getRepository } from 'typeorm'
 import { Lista } from '../database/entities/lista'
 
 export type ListObject = {
+    id?: number
     item: string;
     preco: number;
 }
