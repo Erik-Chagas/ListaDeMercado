@@ -7,7 +7,7 @@ export type UpdateList = {
 }
 
 class UpdateListObject{
-    async Update({id, preco} : UpdateList) : Promise<any>{
+    async Update({ id, preco } : UpdateList) : Promise<any>{
         const repo = getRepository(Lista)
 
         const ListObject = await repo.findOne(id)

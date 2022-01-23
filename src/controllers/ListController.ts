@@ -2,6 +2,7 @@ import CreateListObject from '../services/CreateListObject'
 import { Response, Request } from 'express'
 import UpdateListObject from '../services/UpdateListObject'
 import GetAllListObjects from '../services/GetAllListObjects'
+import GetOneListObject from '../services/GetOneListObject'
 
 class ListController{
     async handleCreateListObject(req: Request, res: Response){
@@ -50,6 +51,28 @@ class ListController{
 
     async handleGetAllListObjects(req: Request, res: Response){
         const result = await GetAllListObjects.getAll()
+
+        return res.json(result)
+    }
+
+    async handleGetOneListObject(req: Request, res: Response){
+        const { id } = req.body
+
+        if(id === undefined){
+            return res.status(400).json({
+                error: true,
+                message: 'id é necessário para realizar a busca'
+            })
+        }
+
+        const result = await GetOneListObject.getOne(id)
+
+        if(result instanceof Error){
+            return res.status(400).json({
+                error: true,
+                message: result.message
+            })
+        }
 
         return res.json(result)
     }

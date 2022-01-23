@@ -36,9 +36,10 @@ describe('Testing API calls', () => {
         const preco = Math.floor(Math.random() * 100) + 1
         
         const response = await request(app).put('/update').send({id, preco})
+        exampleListObject = response.body
 
         expect(response.status).toBe(200)
-        expect(response.body).toBeInstanceOf(Object)
+        expect(response.body).toMatchObject(exampleListObject)
         expect(response.body.preco).toEqual(preco)
     })
 
@@ -49,7 +50,6 @@ describe('Testing API calls', () => {
         const response = await request(app).put('/update').send({id, preco})
 
         expect(response.status).toBe(400)
-        expect(response.body).toBeInstanceOf(Object)
         expect(response.body.error).toEqual(true)
         expect(response.body.message).toEqual('Item da lista não encontrado')
     })
@@ -58,6 +58,26 @@ describe('Testing API calls', () => {
     it("Should return all list objects", async () => {
         const response = await request(app).get('/')
 
+        expect(response.status).toBe(200)
         expect(response.body).toBeInstanceOf(Array)
+    })
+
+    //GET ONE
+    it("Should return the list object of the specified id", async () => {
+        const { id } = exampleListObject
+
+        const response = await request(app).get('/getone').send({id})
+
+        expect(response.status).toBe(200)
+        expect(response.body).toMatchObject(exampleListObject)
+    })
+
+    it("Should return an error for not finding the item of specified id for get", async () => {
+        const id = Math.floor(Math.random() * 10000) + 1000
+
+        const response = await request(app).get('/getone').send({id})
+
+        expect(response.status).toBe(400)
+        expect(response.body.message).toEqual('Item da lista não encontrado')
     })
 })

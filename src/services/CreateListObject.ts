@@ -8,7 +8,7 @@ export type ListObject = {
 }
 
 class CreateListObject{
-    async create({item, preco} : ListObject) : Promise<any>{
+    async create({ item, preco } : ListObject) : Promise<any>{
         const repo = getRepository(Lista)
 
         const ListObj = repo.create({
