@@ -1,6 +1,7 @@
 //TESTES UNITÁRIOS
 import { createConnection, getConnection } from "typeorm";
 import CreateListObject, { ListObject } from "../services/CreateListObject";
+import GetAllListObjects from "../services/GetAllListObjects";
 import UpdateListObject from "../services/UpdateListObject";
 
 describe("Services layer", () => {
@@ -44,5 +45,12 @@ describe("Services layer", () => {
         const result = await UpdateListObject.Update({ id, preco })
 
         expect(result).toEqual(new Error('Item da lista não encontrado'))
+    })
+
+    //GET ALL
+    it("Should return all list objects", async () => {
+        const result = await GetAllListObjects.getAll()
+
+        expect(result).toBeInstanceOf(Array)
     })
 })

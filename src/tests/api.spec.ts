@@ -53,4 +53,11 @@ describe('Testing API calls', () => {
         expect(response.body.error).toEqual(true)
         expect(response.body.message).toEqual('Item da lista não encontrado')
     })
+
+    //GET ALL
+    it("Should return all list objects", async () => {
+        const response = await request(app).get('/')
+
+        expect(response.body).toBeInstanceOf(Array)
+    })
 })

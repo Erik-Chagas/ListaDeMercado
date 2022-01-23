@@ -1,6 +1,7 @@
 import CreateListObject from '../services/CreateListObject'
 import { Response, Request } from 'express'
 import UpdateListObject from '../services/UpdateListObject'
+import GetAllListObjects from '../services/GetAllListObjects'
 
 class ListController{
     async handleCreateListObject(req: Request, res: Response){
@@ -44,6 +45,12 @@ class ListController{
             })
         }
         
+        return res.json(result)
+    }
+
+    async handleGetAllListObjects(req: Request, res: Response){
+        const result = await GetAllListObjects.getAll()
+
         return res.json(result)
     }
 }
