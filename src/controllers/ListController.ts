@@ -3,6 +3,7 @@ import { Response, Request } from 'express'
 import UpdateListObject from '../services/UpdateListObject'
 import GetAllListObjects from '../services/GetAllListObjects'
 import GetOneListObject from '../services/GetOneListObject'
+import DeleteListObject from '../services/DeleteListObject'
 
 class ListController{
     async handleCreateListObject(req: Request, res: Response){
@@ -66,6 +67,28 @@ class ListController{
         }
 
         const result = await GetOneListObject.getOne(id)
+
+        if(result instanceof Error){
+            return res.status(400).json({
+                error: true,
+                message: result.message
+            })
+        }
+
+        return res.json(result)
+    }
+
+    async handleDeleteOneListObject(req: Request, res: Response){
+        const { id } = req.body
+
+        if(id === undefined){
+            return res.status(400).json({
+                error: true,
+                message: 'id é necessário para deletar um item'
+            })
+        }
+
+        const result = await DeleteListObject.delete(id)
 
         if(result instanceof Error){
             return res.status(400).json({

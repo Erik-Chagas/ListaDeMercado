@@ -1,6 +1,7 @@
 //TESTES UNITÁRIOS
 import { createConnection, getConnection } from "typeorm";
 import CreateListObject, { ListObject } from "../services/CreateListObject";
+import DeleteListObject from "../services/DeleteListObject";
 import GetAllListObjects from "../services/GetAllListObjects";
 import GetOneListObject from "../services/GetOneListObject";
 import UpdateListObject from "../services/UpdateListObject";
@@ -66,6 +67,23 @@ describe("Services layer", () => {
     it("Should return an error for not finding the item of specified id for get", async () => {
         const id = Math.floor(Math.random() * 10000) + 1000
         const result = await GetOneListObject.getOne(id)
+
+        expect(result).toEqual(new Error('Item da lista não encontrado'))
+    })
+
+    //DELETE
+    it("Should delete the list object of the specified id", async () => {
+        const { id } = exampleListObject
+        const result = await DeleteListObject.delete(id)
+
+        const checkDelete = await GetOneListObject.getOne(id)
+
+        expect(checkDelete).toEqual(new Error('Item da lista não encontrado'))
+    })
+
+    it("Should return an error for not finding the item of specified id for delete", async () => {
+        const id = Math.floor(Math.random() * 10000) + 1000
+        const result = await DeleteListObject.delete(id)
 
         expect(result).toEqual(new Error('Item da lista não encontrado'))
     })

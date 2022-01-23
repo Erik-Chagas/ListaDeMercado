@@ -80,4 +80,26 @@ describe('Testing API calls', () => {
         expect(response.status).toBe(400)
         expect(response.body.message).toEqual('Item da lista não encontrado')
     })
+
+    //DELETE
+    it("Should delete a list object of the specified id", async () => {
+        const { id } = exampleListObject
+
+        const response = await request(app).delete('/delete').send({id})
+        const checkDelete = await request(app).get('/getone').send({id})
+
+        expect(response.status).toBe(200)
+
+        expect(checkDelete.status).toBe(400)
+        expect(checkDelete.body.message).toEqual('Item da lista não encontrado')
+    })
+
+    it("Should return an error for not finding the item of specified id for delete", async () => {
+        const id = Math.floor(Math.random() * 10000) + 1000
+
+        const response = await request(app).delete('/delete').send({id})
+
+        expect(response.status).toBe(400)
+        expect(response.body.message).toEqual('Item da lista não encontrado')
+    })
 })

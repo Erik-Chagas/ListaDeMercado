@@ -7,5 +7,6 @@ routes.post('/create', ListController.handleCreateListObject)
 routes.put('/update', ListController.handleUpdateListObject)
 routes.get('/', ListController.handleGetAllListObjects)
 routes.get('/getone', ListController.handleGetOneListObject)
+routes.delete('/delete', ListController.handleDeleteOneListObject)
 
 export { routes }
