@@ -3,10 +3,10 @@ import ListController from "./controllers/ListController"
 
 const routes = Router()
 
-routes.post('/create', ListController.handleCreateListObject)
-routes.put('/update', ListController.handleUpdateListObject)
+routes.post('/itens', ListController.handleCreateListObject)
+routes.put('/itens', ListController.handleUpdateListObject)
 routes.get('/', ListController.handleGetAllListObjects)
-routes.get('/getone', ListController.handleGetOneListObject)
-routes.delete('/delete', ListController.handleDeleteOneListObject)
+routes.get('/itens/:id', ListController.handleGetOneListObject)
+routes.delete('/itens/:id', ListController.handleDeleteOneListObject)
 
 export { routes }

@@ -57,7 +57,7 @@ class ListController{
     }
 
     async handleGetOneListObject(req: Request, res: Response){
-        const { id } = req.body
+        const { id } = req.params
 
         if(id === undefined){
             return res.status(400).json({
@@ -66,7 +66,7 @@ class ListController{
             })
         }
 
-        const result = await GetOneListObject.getOne(id)
+        const result = await GetOneListObject.getOne(parseInt(id))
 
         if(result instanceof Error){
             return res.status(400).json({
@@ -79,7 +79,7 @@ class ListController{
     }
 
     async handleDeleteOneListObject(req: Request, res: Response){
-        const { id } = req.body
+        const { id } = req.params
 
         if(id === undefined){
             return res.status(400).json({
@@ -88,7 +88,7 @@ class ListController{
             })
         }
 
-        const result = await DeleteListObject.delete(id)
+        const result = await DeleteListObject.delete(parseInt(id))
 
         if(result instanceof Error){
             return res.status(400).json({

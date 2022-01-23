@@ -22,7 +22,7 @@ describe('Testing API calls', () => {
     it('Should be able to create a new user', async () => {
         const { item, preco } = exampleListObject
 
-        const response = await request(app).post('/create').send({item, preco})
+        const response = await request(app).post('/itens').send({item, preco})
         exampleListObject = response.body
 
         expect(response.status).toBe(200)
@@ -35,7 +35,7 @@ describe('Testing API calls', () => {
         const { id } = exampleListObject
         const preco = Math.floor(Math.random() * 100) + 1
         
-        const response = await request(app).put('/update').send({id, preco})
+        const response = await request(app).put('/itens').send({id, preco})
         exampleListObject = response.body
 
         expect(response.status).toBe(200)
@@ -47,7 +47,7 @@ describe('Testing API calls', () => {
         const id = Math.floor(Math.random() * 10000) + 1000
         const preco = Math.floor(Math.random() * 100) + 1
 
-        const response = await request(app).put('/update').send({id, preco})
+        const response = await request(app).put('/itens').send({id, preco})
 
         expect(response.status).toBe(400)
         expect(response.body.error).toEqual(true)
@@ -66,7 +66,7 @@ describe('Testing API calls', () => {
     it("Should return the list object of the specified id", async () => {
         const { id } = exampleListObject
 
-        const response = await request(app).get('/getone').send({id})
+        const response = await request(app).get(`/itens/${id}`)
 
         expect(response.status).toBe(200)
         expect(response.body).toMatchObject(exampleListObject)
@@ -75,7 +75,7 @@ describe('Testing API calls', () => {
     it("Should return an error for not finding the item of specified id for get", async () => {
         const id = Math.floor(Math.random() * 10000) + 1000
 
-        const response = await request(app).get('/getone').send({id})
+        const response = await request(app).get(`/itens/${id}`)
 
         expect(response.status).toBe(400)
         expect(response.body.message).toEqual('Item da lista não encontrado')
@@ -85,8 +85,8 @@ describe('Testing API calls', () => {
     it("Should delete a list object of the specified id", async () => {
         const { id } = exampleListObject
 
-        const response = await request(app).delete('/delete').send({id})
-        const checkDelete = await request(app).get('/getone').send({id})
+        const response = await request(app).delete(`/itens/${id}`)
+        const checkDelete = await request(app).get(`/itens/${id}`)
 
         expect(response.status).toBe(200)
 
@@ -97,7 +97,7 @@ describe('Testing API calls', () => {
     it("Should return an error for not finding the item of specified id for delete", async () => {
         const id = Math.floor(Math.random() * 10000) + 1000
 
-        const response = await request(app).delete('/delete').send({id})
+        const response = await request(app).delete(`/itens/${id}`)
 
         expect(response.status).toBe(400)
         expect(response.body.message).toEqual('Item da lista não encontrado')
